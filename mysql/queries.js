@@ -33,6 +33,17 @@ const queries = {
                 ON users.id = logins.user_id
                   WHERE token = "${token}";`;
   },
+
+  updateUser: (id, name, email, password) => {
+    return `UPDATE users
+              SET name = "${name}", email = "${email}", password = "${password}"
+                    WHERE id = "${id}";`;
+  },
+
+  deleteUser: (id) => {
+    return `DELETE FROM users
+                WHERE id = "${id}";`;
+  },
 };
 
 module.exports = queries;

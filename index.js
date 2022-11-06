@@ -8,7 +8,7 @@ const { checkToken } = require("./middleware/auth");
 const { getUniqueId } = require("./utils");
 const { addToLog } = require("./middleware/logging");
 
-//check the db status
+//check the db status(bringing in the connection)
 checkDBStatus(asyncMySQL);
 
 simpsons.forEach((element) => {
@@ -20,7 +20,7 @@ simpsons.forEach((element) => {
 app.use(express.static("public")); //handle static files
 app.use(express.json()); //turns the body into an object
 
-//utility middleware
+//utility middleware - delivers the connection to any part of programme
 app.use((req, res, next) => {
   req.asyncMySQL = asyncMySQL;
   next();

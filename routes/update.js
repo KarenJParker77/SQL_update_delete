@@ -1,21 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const { updateUser } = require("../mysql/queries");
+const sha256 = require("sha256");
 
-router.put("/", (req, res) => {
-  const { body, currentUser } = req;
-
-  if (body.quote && typeof body.quote === "string") {
-    currentUser.quote = body.quote;
-  }
-  if (body.character && typeof body.quote === "string") {
-    currentUser.character = body.character;
-  }
-  if (body.image && typeof body.quote === "string") {
-    currentUser.image = body.image;
-  }
-  if (body.characterDirection && typeof body.quote === "string") {
-    currentUser.characterDirection = body.characterDirection;
-  }
+router.put("/", async (req, res) => {
+  let { name, email, password } = req.body;
+  const { id } = req.headers;
+  password = sha256(process.env.SALT + password);
+  await req.asyncMySQL(updateUser(id, name, email, password));
 
   res.send({ status: 1 });
 });

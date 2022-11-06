@@ -7,10 +7,10 @@ const sha256 = require("sha256");
 router.post("/", async (req, res) => {
   let { name, email, password } = req.body;
 
-  //check we have all the data
+  //check we have all the data needed to create account
   if (name && email && password) {
     password = sha256(process.env.SALT + password);
-
+    // send the data to SQL
     const result = await req.asyncMySQL(createUser(name, email, password));
 
     if (result.affectedRows === 1) {

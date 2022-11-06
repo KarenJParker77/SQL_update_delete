@@ -1,3 +1,5 @@
+// to ensure you are talking to the correct database
+
 checkDBStatus = async (asyncMySQL) => {
   try {
     const results = await asyncMySQL(`SHOW TABLES;`);
